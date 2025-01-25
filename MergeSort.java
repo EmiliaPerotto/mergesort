@@ -1,15 +1,53 @@
 import java.io.*;
 import java.util.*;
 public class MergeSort{
-  public static int[] merge_split (int[] arr1, int low, int high){
-    int middle = (low + high) / 2;
-    return middle;
-    int[] arr_right = new int[middle];
-    int[] arr_left = new int[middle];
-    int right = middle;
-    int 
-    
-
+  public static void mergeSort (int[] arr1){
+    int length = arr1.length;
+    if(length <= 1){
+      return;
+    } //base case
+    int middle = (length) / 2;
+    int[] leftArr = new int[middle];
+    int[] rightArr = new int[length - middle];
+    for(int i = 0; i < middle; i++){
+        leftArr[i] = arr1[i];
+      }
+    for(int i = middle; i < length; i++){
+        rightArr[i-middle] = arr1[i];
+      }
+    mergeSort(leftArr);
+    mergeSort(rightArr);
+    merge(leftArr, rightArr, arr1);
+    }
+  public static void merge(int[] leftArr, int[] rightArr, int[] arr3){
+    int leftSize = leftArr.length;
+    int rightSize = rightArr.length;
+    int i = 0;
+    int l = 0;
+    int r = 0;//index
+    //conditions for merging
+    while(l < leftSize && r < rightSize){
+      if (leftArr[l] < rightArr[r]){
+        arr3[i] = leftArr[l];
+        i++;
+        l++;
+      }
+      else{
+        arr3[i] = rightArr[r];
+        i++;
+        r++;
+      }
+    }
+    while (l < leftSize) {
+      arr3[i] = leftArr[l];
+      i++;
+      l++;
+    }
+    while (r < rightSize) {
+      arr3[i] = rightArr[r];
+      i++;
+      r++;
+    }
   }
   public static void main (String args[]) throws IOException{
     Scanner in = new Scanner(System.in);
@@ -23,8 +61,7 @@ public class MergeSort{
       arr[j] = fin.nextInt();
       j++;
     } 
-    int low = 0;
-    int high = arr.length -1;
+    mergeSort(arr);
     for (int i = 0; i < arr.length; i++){
       if(i != arr.length -1){
         System.out.print(arr[i] + " , ");
@@ -33,6 +70,5 @@ public class MergeSort{
         System.out.print(arr[i]);
     }
   }
-      //System.out.println("Middle val: " + merge_split(arr, low, high));    this works
   }
-}
+  }
